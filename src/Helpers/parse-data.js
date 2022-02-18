@@ -9,13 +9,14 @@ export function parseData(data) {
   const sortByCreatedAt = sortBy(prop('createdAt'));
   const sortedData = sortByCreatedAt(data);
 
-  const getFinalData = (data) => {
-    const finalData = data.reduce((acc, current) => {
+  const getFinalData = (posts) => {
+    const finalData = posts.reduce((acc, current) => {
       const year = getYear(current.createdAt);
       if (year !== 2019) return acc;
 
       const month = getMonth(current.createdAt);
       if (acc[month]) {
+        // eslint-disable-next-line operator-assignment
         acc[month] = acc[month] + 1;
       } else {
         acc[month] = 1;

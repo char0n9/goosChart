@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { useQuery, gql } from '@apollo/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { parseData } from './Helpers/parse-data';
 
 function App() {
   const POSTS = gql`
@@ -20,9 +21,20 @@ function App() {
   if (error) return <p>{error.message}</p>;
 
   if (data) {
+    const parsedData = parseData(data.allPosts);
     return (
       <div>
-        {data.allPosts.map((post) => <p>{post.title}</p>)}
+        {parsedData.map((item) => (
+          <p>
+            Month:
+            {' '}
+            {item.month}
+            {' '}
+            | Count:
+            {' '}
+            {item.postCount}
+          </p>
+        ))}
       </div>
     );
   }
