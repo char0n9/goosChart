@@ -1,28 +1,31 @@
 import React from 'react';
 import './App.css';
+import { useQuery, gql } from '@apollo/client';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit
-          {' '}
-          <code>src/App.js</code>
-          {' '}
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const POSTS = gql`
+    query getAllPosts {
+      allPosts(count:55){
+        id
+        title
+        createdAt
+      }
+    }
+  `;
+
+  const { loading, error, data } = useQuery(POSTS);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error.message}</p>;
+
+  if (data) {
+    return (
+      <div>
+        {data.allPosts.map((post) => <p>{post.title}</p>)}
+      </div>
+    );
+  }
 }
 
 export default App;
