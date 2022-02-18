@@ -1,5 +1,6 @@
 import React from 'react';
 import Spinner from 'react-bootstrap/Spinner';
+import BarGraph from "./BarGraph";
 import { parseData } from '../Helpers/parse-data';
 
 function QueryResult({ loading, error, data }) {
@@ -20,21 +21,7 @@ function QueryResult({ loading, error, data }) {
   }
   if (data) {
     const parsedData = parseData(data.allPosts);
-    return (
-      <div>
-        {parsedData.map((item) => (
-          <p>
-            Month:
-            {' '}
-            {item.month}
-            {' '}
-            | Count:
-            {' '}
-            {item.postCount}
-          </p>
-        ))}
-      </div>
-    );
+    return <BarGraph data={parsedData} width={800} height={500}/>;
   }
 }
 
