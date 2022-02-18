@@ -1,8 +1,8 @@
 # Steps taken
 
-Generate React App /n
-Read apollo graphql basic docs /n
-Install Apollo and check if we receive the data
+Generate React App \
+Read apollo graphql basic docs \
+Install Apollo and check if we receive the data \
 Get Bar Graph from visx examples
 Try to customize graph
 Fail
