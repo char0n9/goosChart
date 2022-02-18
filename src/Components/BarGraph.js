@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Bar } from '@visx/shape';
+import { AxisBottom } from '@visx/axis';
 import { Group } from '@visx/group';
 import { scaleBand, scaleLinear } from '@visx/scale';
 
@@ -9,30 +10,29 @@ const verticalMargin = 120;
 const getMonth = (d) => d.month;
 const getPostCount = (d) => Number(d.postCount);
 
-
-export default function BarGraph({ width, height, events = false, data }) {
+export default function BarGraph({
+  width, height, events = false, data,
+}) {
   // bounds
   const xMax = width;
   const yMax = height - verticalMargin;
 
   // scales, memoize for performance
   const xScale = useMemo(
-    () =>
-      scaleBand({
-        range: [0, xMax],
-        round: true,
-        domain: data.map(getMonth),
-        padding: 0.4,
-      }),
+    () => scaleBand({
+      range: [0, xMax],
+      round: true,
+      domain: data.map(getMonth),
+      padding: 0.4,
+    }),
     [xMax],
   );
   const yScale = useMemo(
-    () =>
-      scaleLinear({
-        range: [yMax, 0],
-        round: true,
-        domain: [0, Math.max(...data.map(getPostCount))],
-      }),
+    () => scaleLinear({
+      range: [yMax, 0],
+      round: true,
+      domain: [0, Math.max(...data.map(getPostCount))],
+    }),
     [yMax],
   );
 
@@ -61,8 +61,9 @@ export default function BarGraph({ width, height, events = false, data }) {
           );
         })}
       </Group>
+      <Group>
+        <AxisBottom top={yMax + verticalMargin / 2} scale={xScale} />
+      </Group>
     </svg>
   );
-
-  
 }
